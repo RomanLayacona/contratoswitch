@@ -1,0 +1,128 @@
+<div>
+    <div class="box-sap">
+        <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Cliente</span>
+                    <h6 class="value-input-sap">{{ contrato.CodigoCliente }} - {{ contrato.razonSocial }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Sucursal</span>
+                    <h6 class="value-input-sap">{{ contrato.CodigoSucursal }} - {{ contrato.denComercial }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Rubro</span>
+                    <h6 class="value-input-sap">{{ contrato.rubroId }} - {{ contrato.descRubro }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">MCC</span>
+                    <h6 class="value-input-sap">{{ contrato.mcc }} - {{ contrato.descMcc }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">C&oacute;d. Procesadora</span>
+                    <h6 class="value-input-sap">{{ contrato.codProc }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">C&oacute;d. Switch</span>
+                    <h6 class="value-input-sap">{{ contrato.codSwi }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Contrato</span>
+                    <h6 class="value-input-sap">{{ contrato.NroContrato }} - {{ contrato.descTc }}</h6>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <div class="box-sap">
+
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0">Cambio de Estado</h5>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-lg-1 mx-0 contenido-box-sap py-4">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Estado Actual</span>
+                    <h6 class="value-input-sap">{{ contrato.Estado == 'A' ? 'Activo' : 'Inactivo' }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Estado Futuro</span>
+                    <h6 class="value-input-sap">{{ contrato.Estado == 'A' ? 'Inactivo' : 'Activo' }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div *ngIf="(campos.motivo?.zVisualizar && campos.motivo?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                    <label class="label-sap">Motivo:</label>
+                    <select [(ngModel)]="motivoSeleccionado" class="select-sap mb-2">
+                        <option *ngFor="let motivo of motivos" value="{{ motivo.cod }}">{{ motivo.descripcion }}</option>
+                    </select>
+                </div>
+                <div *ngIf="campos.motivo?.zVisualizar && !campos.motivo?.zModificar" class="d-flex flex-column">
+                    <label class="label-sap">Motivo:</label>
+                    <select disabled [(ngModel)]="motivoSeleccionado" class="select-sap mb-2">
+                        <option *ngFor="let motivo of motivos" value="{{ motivo.cod }}">{{ motivo.descripcion }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div *ngIf="(campos.observacion?.zVisualizar && campos.observacion?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                    <label class="label-sap">Observaci&oacute;n:</label>
+                    <input [(ngModel)]="observacion" type="text" class="value-input-sap input-sap">
+                </div>
+                <div *ngIf="campos.observacion?.zVisualizar && !campos.observacion?.zModificar" class="d-flex flex-column">
+                    <label class="label-sap">Observaci&oacute;n:</label>
+                    <input disabled [(ngModel)]="observacion" type="text" class="value-input-sap input-sap">
+                </div>
+            </div>
+
+            <div class="col">
+                <div  class="d-flex mt-3">
+                    <button *ngIf="rol.zCrear" type="button" class="btn-sap btn-send mr-2" (click)="actualizarEstado(contrato, motivoSeleccionado, observacion)">
+                        <span *ngIf="!btnLoading">Guardar</span>
+                        <span *ngIf="btnLoading">Guardando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                    </button>                    
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <div class="box-sap">
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="mr-3" style="font-weight: 400;">{{ mensaje }}</span> <u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+            </div>
+        </div> 
+    </div>
+</div>

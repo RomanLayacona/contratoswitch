@@ -1,0 +1,116 @@
+<div class="box-sap">
+
+    <div class="border-bottom">
+        <div class="col-12">
+            <h5 class="titulo-seccion-sap m-0">Agregar Parametro Comisi&oacute;n</h5>
+        </div>
+    </div>
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Origen - Tipo Relaci&oacute;n</span>
+                <select [(ngModel)]="origenTipoRelInput"  class="select-sap" >
+                    <option *ngFor="let origen of origenesTipoRelacion" value="{{ origen.value }}">{{ origen.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="origenTipoRelInput == 4">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Entidad Intercambio</span>
+                <select [(ngModel)]="entidadIntercambioInput"  class="select-sap" >
+                    <option *ngFor="let entidadIntercambio of entidadesIntercambio" value="{{ entidadIntercambio.GE04ENTCOD }}">{{ entidadIntercambio.GE04ENTNOM }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Cód. Moneda</span>
+                <select [(ngModel)]="codMonInput"  class="select-sap" >
+                    <option value="600">600 - PYG - GUARANI</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Frecuencia Liquidaci&oacute;n</span>
+                <select [(ngModel)]="frecuenciaLiqInput"  class="select-sap" >
+                    <option value="2">02 D&Iacute;AS</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Tipo Comisi&oacute;n</span>
+                <select [(ngModel)]="tipoComisionInput"  class="select-sap" >
+                    <option value="P">PORCENTAJE</option>
+                    <option value="F">IMPORTE FIJO</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Cta. Bancaria</span>
+                <select [(ngModel)]="ctaBcaInput"  class="select-sap" >
+                    <option *ngFor="let cuenta of cuentasBancarias" value="{{ cuenta.GR17CtaBan }}">{{ cuenta.CuentaFormato }}</option> 
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Liquida Cheque S/N</span>
+                <h6 class="value-input-sap puntero pointer text-underline">{{ contrato.GP77LiqChq }}</h6>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="tipoComisionInput == 'F'">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Importe Fijo de Comisi&oacute;n</span>
+                <input class="value-input-sap select-sap" type="number" min="0" step="0.01" [(ngModel)]="importeFijoComInput">
+            </div>
+        </div>
+        <div class="col" *ngIf="tipoComisionInput == 'F'">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Importe Transacc. Para Aplicar Imp. Fijo</span>
+                <input class="value-input-sap select-sap" type="number" min="0" step="0.01" [(ngModel)]="importeTranAplFijoInput">
+            </div>
+        </div>
+
+        <div class="col" *ngIf="tipoComisionInput == 'P'">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Porcentaje Comisi&oacute;n</span>
+                <input class="value-input-sap select-sap" type="number" min="0" step="0.01" [(ngModel)]="porcentajeComInput">
+            </div>
+        </div>
+        <div class="col" *ngIf="tipoComisionInput == 'P'">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Importe Comisi&oacute;n Min</span>
+                <input class="value-input-sap select-sap" type="number" min="0" step="0.01" [(ngModel)]="importeComMinInput">
+            </div>
+        </div>
+        <div class="col" *ngIf="tipoComisionInput == 'P'">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Importe Comisi&oacute;n Max</span>
+                <input class="value-input-sap select-sap" type="number" min="0" step="0.01" [(ngModel)]="importeComMaxInput">
+            </div>
+        </div>       
+    </div>
+
+    <div>
+        <div class="col-12 py-3">
+            <div class="d-flex">
+                <button type="button" class="btn-sap btn-send" (click)="agregarParamCom()">
+                    <span *ngIf="!btnLoadingAgregarParamCom">Agregar</span>
+                    <span *ngIf="btnLoadingAgregarParamCom">Agregando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

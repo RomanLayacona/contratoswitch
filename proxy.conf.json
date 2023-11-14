@@ -1,0 +1,7 @@
+{
+    "/coretest/*": {
+      "target": "https://bancard-apim-qas.apimanagement.br10.hana.ondemand.com",
+      "secure": false,
+      "changeOrigin": true
+    }
+}

@@ -1,0 +1,84 @@
+<div class="box-sap">
+
+    <div class="border-bottom">
+        <div class="col-12">
+            <h5 class="titulo-seccion-sap m-0">Cambio de Estado Liquidaci&oacute;n con Cheque</h5>
+        </div>
+    </div>
+
+    <div class="row row-cols-7 row-cols-lg-7 mx-0 contenido-box-sap py-4">
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Cliente</span>
+                <h6 class="value-input-sap">{{ contrato.GP77CliCod }} - {{ contrato.GP77CliRaz }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Sucursal</span>
+                <h6 class="value-input-sap">{{ contrato.GP77SucCod }} - {{ contrato.GP77CliSNo }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;digo Switch</span>
+                <h6 class="value-input-sap">{{ contrato.GP77CodSwi }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;digo Procesadora</span>
+                <h6 class="value-input-sap">{{ contrato.GP77CodPro }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Liq. con cheque</span>
+                <h6 class="value-input-sap">
+                    <b>{{ estadoFuturo.name }}</b>
+                </h6>
+            </div>
+        </div>  
+    </div>
+</div>
+<div class="box-sap">
+    <table class="table table-bordered table-sap">
+        <thead>
+        <tr>
+          <th scope="col">Mon.</th>
+          <th scope="col">Entidad</th>
+          <th scope="col">Suc.</th>
+          <th scope="col">Cuenta</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Cheque</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let cuenta of cuentasBancarias">
+          <td>
+            {{ cuenta.GR17MonCnu }}
+          </td>
+          <td>
+            {{ cuenta.GR17BanNom }}
+          </td>
+          <td>
+            {{ cuenta.GR17SenCod }}
+          </td>
+          <td>
+            {{ cuenta.GR17CtaBan }}
+          </td>
+          <td>
+            {{ cuenta.GR17CtaBan }}
+          </td>
+          <td>
+            {{ cuenta.GR17LiqChq }}
+          </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

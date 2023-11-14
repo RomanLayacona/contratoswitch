@@ -1,0 +1,278 @@
+<div>
+    <div class="box-sap">
+
+        <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Cliente</span>
+                    <h6 class="value-input-sap">{{ contrato.CodigoCliente }} - {{ contrato.razonSocial }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Sucursal</span>
+                    <h6 class="value-input-sap">{{ contrato.CodigoSucursal }} - {{ contrato.denComercial }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Rubro</span>
+                    <h6 class="value-input-sap">{{ contrato.rubroId }} - {{ contrato.descRubro }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">MCC</span>
+                    <h6 class="value-input-sap">{{ contrato.mcc }} - {{ contrato.descMcc }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">C&oacute;d. Procesadora</span>
+                    <h6 class="value-input-sap">{{ contrato.codProc }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">C&oacute;d. Switch</span>
+                    <h6 class="value-input-sap">{{ contrato.codSwi }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Contrato</span>
+                    <h6 class="value-input-sap">{{ contrato.NroContrato }} - {{ contrato.descTc }}</h6>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="box-sap">
+
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0">Servicios / Prestaciones</h5>
+            </div>
+        </div>
+
+        <div>
+            <div class="col-12 py-3">
+                <div class="d-flex">
+                    <button type="button" class="btn-sap btn-back mr-2" (click)="showFiltrosFn()">
+                        <span>Filtrar</span>
+                    </button>
+
+                    <button *ngIf="rol.zCrear" (click)="crearServicioPrestacion()" type="button" class="btn-sap btn-send">
+                        <span>+ Nuevo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="showFiltros">
+                <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Servicio</label>
+                            <input [(ngModel)]="inputSrv" class="value-input-sap input-sap">        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Prestaci&oacute;n</label>
+                            <input [(ngModel)]="inputPrs" class="value-input-sap input-sap">        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Divisi&oacute;n</label>
+                            <select [(ngModel)]="inputDiv" class="select-sap w-100">
+                                <option value="0">Seleccionar divisi&oacute;n</option>
+                                <option *ngFor="let division of divisiones" value="{{ division.id }}">{{ division.nombre }}</option>
+                            </select>        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Estado</label>
+                            <select [(ngModel)]="inputEst" class="select-sap w-100">
+                                <option value="">Todos</option>
+                                <option *ngFor="let estado of estados" value="{{ estado.value }}">{{ estado.nombre }}</option>
+                            </select>        
+                        </div>
+                    </div>
+        
+                </div>
+
+                <div>
+                    <div class="col-12 contenido-box-sap pb-4">
+                        <button (click)="filtrarServicios()" type="button" class="btn-sap btn-send mr-2">
+                            <span>Filtrar</span>
+                        </button>
+
+                        <button (click)="limpiarFiltros()" type="button" class="btn-sap btn-back">
+                            <span>Limpiar Filtros</span>
+                        </button>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+
+    <div class="box-sap">
+        <div class="table-responsive">
+        <table class="table table-bordered table-sap table-sap-small">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">SRV.</th>
+                <th scope="col">PRS.</th>
+                <th scope="col">DIV.</th>
+                <th scope="col">CLI.</th>
+                <th scope="col">SUC.</th>
+                <th scope="col">CNT.</th>
+                <th scope="col">AVI.</th>
+                <th scope="col">ACT.</th>
+                <th scope="col">FAT.</th>
+                <th scope="col">TRF</th>
+                <th scope="col" style="width: 50px">TARIFARIO</th>
+                <th scope="col">AGR. TRNS.</th>
+                <th scope="col">PRC. FIJO</th>
+                <th scope="col">MON. FIJA</th>
+                <th scope="col">IMP. FIJO</th>
+                <th scope="col">EST.</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="loadingServicios">
+                <div class="d-flex  p-4 w-100 align-items-center justify-content-center">
+                    <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+                </div>
+            </tbody>
+            <tbody *ngIf="!loadingServicios">
+            <tr *ngFor="let servicio of servicios">
+                <td>
+                    <div class="d-flex">
+                        <input (change)="onCheckboxChange($event, servicio)" class="mt-0" type="checkbox">
+                        <fa-icon (click)="verDatosServicio(servicio)" class="puntero icono-accion mx-3" [icon]="faSearch"></fa-icon>
+                        <fa-icon *ngIf="rol.zModificar" (click)="editarServicio(servicio)" class="puntero icono-accion" [icon]="faEdit"></fa-icon>
+                    </div>
+                </td>
+                <td>
+                {{ servicio.FS44SrvIde }}
+                </td>
+                <td>
+                    {{ servicio.FS44CodPre }}
+                </td>
+                <td>
+                   {{ servicio.FS44DivCod }}
+                </td>
+                <td>
+                    {{ servicio.FS46CLICOD }}
+                </td>
+                <td>
+                    {{ servicio.FS46CLISUC }}
+                </td>
+                <td>
+                    {{ servicio.FS47CntCon }}
+                </td>
+                <td>
+                    {{ servicio.FS47CntAvi }}
+                </td>
+                <td>
+                    {{ servicio.FS47CntAct }}
+                </td>
+                <td>
+                    {{ servicio.FS47FATNom }}
+                </td>
+                <td>
+                    {{ servicio.FS45TarCod }}
+                </td>
+                <td>
+                    {{ servicio.FS45TarNom}}
+                </td>
+                <td>
+                    {{ servicio.FS47AgTNo }}
+                </td>
+                <td>
+                    {{ servicio.FS47TarPor}}
+                </td>
+                <td>
+                    {{ servicio.FS47MonCnu }}
+                </td>
+                <td>
+                    {{ servicio.FS47TarImp }}
+                </td>
+                <td>
+                    {{ servicio.FS47Sts }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        </div>
+
+        
+            
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshList()">
+                </ngb-pagination>
+            </div>
+    </div>
+</div>
+
+<div class="box-sap">
+    <div class="col-12 py-3">
+        <span>{{ mensaje }}</span>
+    </div>
+</div>
+
+<div class="box-sap">
+    <div class="col-12 contenido-box-sap py-4">
+        <button *ngIf="rol.zModificar" type="button" (click)="modificarEstados()" class="btn-sap btn-send mr-2" placement="top">
+            <span *ngIf="!loadingCambioEstado">Estado</span>
+            <span *ngIf="loadingCambioEstado">Cambiando estado...</span>
+        </button>
+        <button *ngIf="rol.zEliminar" type="button" (click)="eliminarServicios()" class="btn-sap btn-send mr-2">
+            <span *ngIf="!loadingBorrar">Borrar</span>
+            <span *ngIf="loadingBorrar">Borrando...</span>
+        </button>
+        <button  *ngIf="rol.zModificar" (click)="ingresarServicio()" type="button" class="btn-sap btn-send mr-2">
+            <span>Ingresar Servicio</span>
+        </button>
+        <button type="button" class="btn-sap btn-back mr-2" (click)="goBack()">
+            <span>Volver atr&aacute;s</span>
+        </button>
+    </div>
+</div>
+
+<div class="box-sap" *ngIf="showConfirmaCambioEstado">
+    <div class="col-12 contenido-box-sap pb-4">
+        <h5 class="titulo-seccion-sap m-0">¿Confirma el cambio de estado?</h5>
+        <div class="d-flex">
+            <button type="button" (click)="confirmaCambioEstado()" class="btn-sap btn-send mr-2">
+                <span>Si, confirmo</span>
+            </button>
+            <button type="button" (click)="cancelarCambioEstado()" class="btn-sap btn-back mr-2">
+                <span>Cancelar</span>
+            </button>
+        </div>
+
+        <!-- <div>
+            <fa-icon *ngIf="loadingCambioEstado" [icon]="faSpinner" [spin]="true"></fa-icon>
+            <span style="font-weight: 400;">{{ mensajeCambioEstado }}</span>
+        </div> -->
+    </div>
+</div>

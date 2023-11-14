@@ -1,0 +1,324 @@
+<div *ngIf="loading" class="bg-loading">
+    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+
+<div *ngIf="!loading">
+    <div class="box-sap">
+
+        <div class="row row-cols-7 row-cols-lg-7 mx-0 contenido-box-sap py-4">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Captura Autom&aacute;tica</span>
+                    <h6 class="value-input-sap">{{ contrato.GP77Cap }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Con M&aacute;quina o POS</span>
+                    <select [(ngModel)]="conMaquinaOPosInput"  class="select-sap" >
+                        <option *ngFor="let tipoMaquina of conMaquinaOPosOptions" value="{{ tipoMaquina.value }}">{{ tipoMaquina.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Fecha Aniversario</span>
+                    <h6 class="value-input-sap">{{ contrato.GP77FchAni }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Contrato Actualizado</span>
+                    <select [(ngModel)]="contratoActualizadoInput"  class="select-sap">
+                        <option value="S">Si</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Riesgo</span>
+                    <h6 class="value-input-sap">{{ contrato.GP77NRCod }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Usuario/FH Actualiz.</span>
+                    <h6 class="value-input-sap">{{ contrato.GP77UsuUpd }}</h6>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Usuario/FH Ingreso</span>
+                    <h6 class="value-input-sap">{{ contrato.GP77UsuIng }}</h6>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="box-sap">
+
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0">Datos de liquidaci&oacute;n</h5>
+            </div>
+        </div>
+
+        <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4 row-datos-liq">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Periocidad Extracto</span>
+                    <select [(ngModel)]="periocidadExtractoInput"  class="select-sap" >
+                        <option value="1">Semanal</option>
+                        <option value="2">Mensual</option>
+                        <option value="3">Quincenal</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Impuesto Comisi&oacute;n</span>
+                    <select [(ngModel)]="impuestoComisionInput"  class="select-sap" >
+                        <option value="">Ninguno</option>
+                        <option value="1">IVA</option>
+                        <option value="4">IVA INTERES</option>
+                        <option value="11">IVA MINIMO</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Retenci&oacute;n IVA</span>
+                    <select [(ngModel)]="retencionIVAInput"  class="select-sap" >
+                        <option value="">Ninguno</option>
+                        <option value="3">RETENCI&Oacute;N IVA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Retenci&oacute;n Renta</span>
+                    <select [(ngModel)]="retencionRentaInput"  class="select-sap" >
+                        <option value="">Ninguno</option>
+                        <option value="2">RETENCI&Oacute;N RENTA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Motivo Retenci&oacute;n Extracto</span>
+                    <select [(ngModel)]="motivoRetencionExtractoInput"  class="select-sap">
+                        <option *ngFor="let motivo of motivosRetencionExtracto" value="{{ motivo.GR09RETCOD }}">{{ motivo.GR09RETDES }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Categor&iacute;a Cuenta Liq.</span>
+                    <select [(ngModel)]="categoriaCuentaLiqInput"  class="select-sap" >
+                        <option value="1">Bancarizado</option>
+                        <option value="2">Liq.c/TTP</option>
+                        <option value="3">Liq.c/Cheque</option>
+                        <option value="4">No Aplica</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Ctas. Bancarias Bloqueadas</span>
+                    <select [(ngModel)]="ctsBancBloqInput"  class="select-sap" >
+                        <option value="S">Si</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Emisi&oacute;n Aut. Detalle Extracto</span>
+                    <select [(ngModel)]="emisionAutInput"  class="select-sap" >
+                        <option value="S">Si</option>
+                        <option value="N">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Liquida en Cheque</span>
+                    <h6 class="value-input-sap puntero pointer text-underline" (click)="cambioEstadoLiqChq()">
+                       <b *ngIf="contrato.GP77LiqChq === 'S'">SI</b>
+                       <b *ngIf="contrato.GP77LiqChq === 'N'">NO</b>
+                    </h6>
+                </div>
+            </div> 
+            
+        </div>
+
+        <div class="contenido-box-sap pb-4">
+            <div class="d-flex col-12">
+                <button type="button" class="btn-sap btn-send mr-2" (click)="actualizarDatosDeLiq()">
+                    <span *ngIf="!btnLoadingActualizarDatLiq">Actualizar</span>
+                    <span *ngIf="btnLoadingActualizarDatLiq">Actualizando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                </button>
+
+                <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="ml-3" style="font-weight: 400;">{{ mensajeActLiq }}</span></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-sap">
+        <div class="d-flex">
+            <div class="col-6 col-lg-3">
+                <div class="border-bottom">
+                    <div class="col-12">
+                        <h5 class="titulo-seccion-sap m-0">Datos para marcas</h5>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="col-12 py-3">
+                        <div class="d-flex">
+                            <button type="button" class="btn-sap btn-send" (click)="agregarMarca()">
+                                <span *ngIf="!btnLoadingAgregarMarca">Agregar</span>
+                                <span *ngIf="btnLoadingAgregarMarca">Agregando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-sap">
+                    <thead>
+                    <tr>
+                      <th scope="col"><fa-icon *ngIf="btnLoadingEliminarMarca" [icon]="faSpinner" [spin]="true"></fa-icon></th>
+                      <th scope="col">Marca</th>
+                      <th scope="col">MCC</th>
+                      <th scope="col">C&Oacute;D. COMERCIO</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let marca of marcas">
+                      <td>
+                        <div class="d-flex">
+                            <fa-icon (click)="deleteMarca(marca)" class="puntero icono-accion mx-3" [icon]="faTrash"></fa-icon>
+                        </div>
+                      </td>
+                      <td>
+                        {{ marca.GP78MarCod }}
+                      </td>
+                      <td>
+                          {{ marca.GP78MerCod }}
+                      </td>
+                      <td>
+                          {{ marca.GP78MerCod }}
+                      </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 col-lg-5">
+                <div class="border-bottom">
+                    <div class="col-12">
+                        <h5 class="titulo-seccion-sap m-0">Planes aceptados</h5>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-9 py-3">
+                        <select [(ngModel)]="planAceptadoInput" class="input-sap w-100" style="width: 100%!important;">
+                            <option *ngFor="let planAceptado of planesAceptados" value="{{ planAceptado.CODIGOPLAN }}">{{ planAceptado.DESCRIPCION }}</option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <div class="d-flex">
+                            <button type="button" class="btn-sap btn-send" (click)="agregarPlan()">
+                                <span *ngIf="!btnLoadingAgregarPlan">Agregar</span>
+                                <span *ngIf="btnLoadingAgregarPlan">Agregando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-sap">
+                    <thead>
+                    <tr>
+                      <th scope="col" width="5%"><fa-icon *ngIf="btnLoadingEliminarPlan" [icon]="faSpinner" [spin]="true"></fa-icon></th>
+                      <th scope="col">Planes aceptados</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let plan of planes">
+                      <td>
+                        <div class="d-flex">
+                            <fa-icon (click)="deletePlan(plan)" class="puntero icono-accion mx-3" [icon]="faTrash"></fa-icon>
+                        </div>
+                      </td>
+                      <td>
+                        {{ plan.GP13PLADES }}
+                      </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div>
+                    <div class="col-12">
+                        <h5 class="titulo-seccion-sap m-0">Cuentas Bancarias</h5>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-sap">
+                    <thead>
+                    <tr>
+                      <th scope="col">Mon.</th>
+                      <th scope="col">Entidad</th>
+                      <th scope="col">Suc.</th>
+                      <th scope="col">Cuenta</th>
+                      <th scope="col">Tipo</th>
+                      <th scope="col">Cheque</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let cuenta of cuentasBancarias">
+                      <td>
+                        {{ cuenta.GR17MonCnu }}
+                      </td>
+                      <td>
+                        {{ cuenta.GR17BanNom }}
+                      </td>
+                      <td>
+                        {{ codigoSucursal }}
+                      </td>
+                      <td>
+                        {{ cuenta.GR17CtaBan }}
+                      </td>
+                      <td *ngIf="cuenta.GR17TpoCta === '1'">CA</td>
+                      <td *ngIf="cuenta.GR17TpoCta === '2'">CC</td>
+                      <td *ngIf="cuenta.GR17TpoCta === '3'">TPP</td>
+                      <td>
+                        {{ cuenta.GR17LiqChq }}
+                      </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <app-parametros-comision></app-parametros-comision>
+</div>

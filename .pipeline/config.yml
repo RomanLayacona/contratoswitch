@@ -1,0 +1,41 @@
+# Project configuration
+general:
+  buildTool: "docker"
+  containerImageName: "romagnol/contratoswitch" # set all three parameters if you want to release or push your application during build
+  containerImageTag: "latest"
+  containerRegistryUrl: "https://registry.hub.docker.com/v2/"
+service:
+  automaticVersioning: false
+  dockerConfigJsonSecretTextCredentialsId: "docker"
+  Acceptance:
+    #kubeConfigSecretTextCredentialsId: "kube"
+    #helmValuePath: "<helmValuesTest.yaml>"
+    #helmValueSecret: "<credentials_Id>"
+  Release:
+    kubeConfigSecretTextCredentialsId: "kube"
+    #helmValuePath: "<helmValuesTest.yaml>"
+    #helmValueSecret: "<credentials_Id>"
+# Stages configuration
+stages:
+  Build:
+    kanikoExecute: true # true, if you want to turn the build stage on for creating a container image (default: false)
+  Acceptance:
+    kubernetesDeploy: false # true, if you want to turn the acceptance stage on for executing automated end-to-end acceptance tests (default: false)
+    deployTool: "kubectl"
+    namespace: "<namespace>" # specify the name of the Kubernetes namespace where you want to test your application (default: "default")
+    createDockerRegistrySecret: true # (optional) true, if you want to save the secret in your Kubernetes cluster
+    appTemplate: "<path/to/appTemplate.yaml>" # enter the path to your apptemplate.yaml file
+    deployCommand: "apply" # (optional) or "replace" if you want to update and replace an already existing resource (default: apply)
+    force: true # (only for deployCommand "replace") true, if you want to add a force tag to your deployment (default: true)
+  Release:
+    kubernetesDeploy: true # true, if you want to turn the release stage on for deployment to a Kubernetes namespace within the specified Kubernetes cluster (default: false)
+    deployTool: "kubectl"
+    namespace: "mashups" # (optional) specify the name of the Kubernetes namespace (default: "default")
+    createDockerRegistrySecret: true # (optional) true, if you want to save the secret in your Kubernetes cluster
+    appTemplate: "manifest.yml" # enter the path to your apptemplate.yaml file
+    deployCommand: "replace" # (optional) or "replace" if you want to update and replace an already existing resource (default: apply)
+    force: true # (only for deployCommand "replace") true, if you want to add a force tag to your deployment
+# Steps configuration
+steps:
+  kanikoExecute:
+    dockerfilePath: "Dockerfile" # (optional) default: "Dockerfile"

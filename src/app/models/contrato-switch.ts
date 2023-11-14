@@ -1,0 +1,32 @@
+export interface ContratoSwitch {
+    CodigoCliente?: number;
+    razonSocial?: string;
+    CodigoSucursal?: number;
+    TipoContrato?: string;
+    descTc?: string;
+    Estado?: string;
+    NroContrato?: number;
+    fhEstado?: Date;
+    usuarioIngreso?: string;
+    fhIngreso?: Date;
+    division?: number;
+    rubroId?: number;
+    descRubro?: string;
+    codProc?: number;
+    codSwi?: number;
+    denComercial?: string;
+    mcc?: number;
+    descMcc?: string;
+    Motivo?: number;
+    Observacion?: string;
+    Usuario?: string;
+    PassWs?: string;
+    UserWs?: string;
+    ModoRest?: string;
+    FS44DivCod?: number;
+    FS44SrvIde?: string;
+    FS47Sts?:string;
+    FS44CodPre?:string;
+    FS01CONTPO?: string;
+    FS46CONNRO?:number;
+}

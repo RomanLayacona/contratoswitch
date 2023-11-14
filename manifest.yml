@@ -1,0 +1,78 @@
+apiVersion: gateway.kyma-project.io/v1beta1
+kind: APIRule
+metadata:
+  name: contratoswitch
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  host: contratoswitch
+  service:
+    name: contratoswitch
+    port: 80
+  rules:
+    - path: /.*
+      accessStrategies:
+        - config: {}
+          handler: noop
+      methods:
+        - GET
+        - POST
+        - PUT
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: contratoswitch
+  labels:
+    app: contratoswitch
+data:
+  config.json: |-
+    {
+      "API_URL": "https://contratoswitch.c-3929e53.kyma.ondemand.com"
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contratoswitch
+  labels:
+    app: contratoswitch
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contratoswitch
+  template:
+    metadata:
+      labels:
+        app: contratoswitch
+    spec:
+      containers:
+        - name: contratoswitch
+          image: romagnol/contratoswitch
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contratoswitch
+  labels:
+    app: contratoswitch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: contratoswitch
+---

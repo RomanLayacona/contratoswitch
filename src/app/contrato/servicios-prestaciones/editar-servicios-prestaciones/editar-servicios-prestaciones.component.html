@@ -1,0 +1,400 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <div class="d-flex flex-column">
+            <input class="select-sap" type="text" [formControl]="filterCli" placeholder="Búsqueda"/>
+            <span class="label-sap" style="margin-top: 2px;">Filtra por COD, Razon Social, RUC.</span>
+        </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-sap">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">COD.</th>
+              <th scope="col">Raz&oacute;n Social</th>
+              <th scope="col">RUC</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cliente of clientes$ | async; index as i">
+              <td>
+                <div class="d-flex">
+                    <fa-icon [icon]="faCheckCircle" (click)="seleccionarCliente(cliente)" class="puntero pointer"></fa-icon>    
+                </div>
+              </td>
+              <td>
+                {{ cliente.GE23CLICOD }}
+              </td>
+              <td>
+                  {{ cliente.GE23CliNom }}
+              </td>
+              <td>
+                  {{ cliente.GE23PJRuc }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+    </div>
+</ng-template>
+
+
+<ng-template #busquedaSuc let-modal>
+    <div class="modal-header">
+        <div class="d-flex flex-column">
+            <input class="select-sap" type="text" [formControl]="filterSuc" placeholder="Búsqueda"/>
+            <span class="label-sap" style="margin-top: 2px;">Filtra por COD, Sucursal.</span>
+        </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-sap">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">COD.</th>
+              <th scope="col">Sucursal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sucursal of sucursales$ | async; index as i">
+              <td>
+                <div class="d-flex">
+                    <fa-icon [icon]="faCheckCircle" (click)="seleccionarSucursal(sucursal)" class="puntero pointer"></fa-icon>    
+                </div>
+              </td>
+              <td>
+                {{ sucursal.GE24CLISUC }}
+              </td>
+              <td>
+                  {{ sucursal.GE24CliSNo }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+    </div>
+</ng-template>
+
+<ng-template #modalTarifario let-modal>
+    <div class="modal-header">
+        <div class="d-flex flex-column">
+            <input class="select-sap" type="text" [formControl]="filterTar" placeholder="Búsqueda"/> 
+            <span class="label-sap" style="margin-top: 2px;">Filtra por COD, Nombre, Cod. Prestaci&oacute;n, Cod. Servicio.</span>
+        </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-sap">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">COD.</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Cod. Prestaci&oacute;n</th>
+              <th scope="col">Cod. Servicio</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tarifario of tarifarios$ | async; index as i">
+              <td>
+                <div class="d-flex">
+                    <fa-icon [icon]="faCheckCircle" (click)="seleccionarTarifario(tarifario)" class="puntero pointer"></fa-icon>    
+                </div>
+              </td>
+              <td>
+                {{ tarifario.CodTarifario }}
+              </td>
+              <td>
+                  {{ tarifario.NombreTarifario }}
+              </td>
+              <td>
+                  {{ tarifario.CodPrestacion }}
+              </td>
+              <td>
+                {{ tarifario.CodServicio }}
+            </td>
+            </tr>
+            </tbody>
+          </table>
+    </div>
+</ng-template>
+
+<div class="box-sap">
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Cliente</span>
+                <h6 class="value-input-sap">{{ contrato.CodigoCliente }} - {{ contrato.razonSocial }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Sucursal</span>
+                <h6 class="value-input-sap">{{ contrato.CodigoSucursal }} - {{ contrato.denComercial }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Rubro</span>
+                <h6 class="value-input-sap">{{ contrato.rubroId }} - {{ contrato.descRubro }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">MCC</span>
+                <h6 class="value-input-sap">{{ contrato.mcc }} - {{ contrato.descMcc }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;d. Procesadora</span>
+                <h6 class="value-input-sap">{{ contrato.codProc }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;d. Switch</span>
+                <h6 class="value-input-sap">{{ contrato.codSwi }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Contrato</span>
+                <h6 class="value-input-sap">{{ contrato.NroContrato }} - {{ contrato.descTc }}</h6>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="box-sap">
+
+    <div class="border-bottom">
+        <div class="col-12">
+            <h5 class="titulo-seccion-sap m-0">Editar Servicio / Prestaci&oacute;n</h5>
+        </div>
+    </div>
+
+    <div class="row row-cols-2 row-cols-lg-2 mx-0 contenido-box-sap pt-4">
+
+        <div class="col">
+            <div *ngIf="campos.servicio?.zVisualizar || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Servicio</label>
+                <h6 class="value-input-sap font-weight-bold">{{ servicio.FS44SrvIde }} - {{ servicio.FS44SrvNom }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div *ngIf="campos.prestacion?.zVisualizar || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Prestaci&oacute;n</label>
+                <h6 class="value-input-sap font-weight-bold">{{ servicio.FS44CodPre }} - {{ servicio.FS44DesPre }}</h6>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row row-cols-3 row-cols-lg-3 mx-0 contenido-box-sap py-2 pb-3">
+
+        <div class="col">
+            <div *ngIf="(campos.cliente?.zVisualizar && campos.cliente?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Cliente</label>
+                <input [(ngModel)]="inputCliente" type="text" class="value-input-sap input-sap" value="{{ servicio.FS46CLICOD }}">
+                <fa-icon [icon]="faSearch" (click)="open(content)" class="pointer puntero"></fa-icon>
+            </div>
+            <div *ngIf="campos.cliente?.zVisualizar && !campos.cliente?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Cliente</label>
+                <input disabled [(ngModel)]="inputCliente" type="text" class="value-input-sap input-sap" value="{{ servicio.FS46CLICOD }}">
+                <fa-icon [icon]="faSearch" ></fa-icon>
+            </div>
+        </div>
+
+        <div class="col">
+            <div *ngIf="(campos.sucursal?.zVisualizar && campos.sucursal?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Sucursal</label>
+                <input [(ngModel)]="inputSucursal" type="text" class="value-input-sap input-sap" value="{{ servicio.FS46CLISUC }}">
+                <fa-icon [icon]="faSearch" (click)="openSucModal(busquedaSuc)" class="pointer puntero"></fa-icon>
+            </div>
+            <div *ngIf="campos.cliente?.zVisualizar && !campos.cliente?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Sucursal</label>
+                <input disabled [(ngModel)]="inputSucursal" type="text" class="value-input-sap input-sap" value="{{ servicio.FS46CLISUC }}">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row row-cols-3 row-cols-lg-3 mx-0 contenido-box-sap py-2 pb-3">
+
+        <div class="col">
+            <div *ngIf="(campos.cntcontratada?.zVisualizar && campos.cntcontratada?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Cnt. Contratada</label>
+                <input [(ngModel)]="inputCntCon" type="text" class="value-input-sap input-sap" value="{{ servicio.FS47CntCon }}">
+            </div>
+            <div *ngIf="campos.cntcontratada?.zVisualizar && !campos.cntcontratada?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Cnt. Contratada</label>
+                <input disabled [(ngModel)]="inputCntCon" type="text" class="value-input-sap input-sap" value="{{ servicio.FS47CntCon }}">
+            </div>
+        </div>
+
+        <div class="col">
+            <div *ngIf="campos.cntavisada?.zVisualizar  || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Cnt. Avisada</label>
+                <h6 class="value-input-sap">{{ servicio.FS47CntAvi }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div *ngIf="campos.cntactivada?.zVisualizar  || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Cnt. Activada</label>
+                <h6 class="value-input-sap">{{ servicio.FS47CntAct }}</h6>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-2 pb-3">
+
+        <div class="col">
+            <div *ngIf="(campos.fat?.zVisualizar && campos.fat?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Forma Aplicaci&oacute;n Tarifa</label>
+                <select [(ngModel)]="formaTarifaAplicadaValue" class="select-sap">
+                    <option *ngFor="let fta of ftas" value="{{ fta.value }}">{{ fta.nombre }}</option>
+                </select>
+            </div>
+            <div *ngIf="campos.fat?.zVisualizar && !campos.fat?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Forma Aplicaci&oacute;n Tarifa</label>
+                <select disabled [(ngModel)]="formaTarifaAplicadaValue" class="select-sap">
+                    <option *ngFor="let fta of ftas" value="{{ fta.value }}">{{ fta.nombre }}</option>
+                </select>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row row-cols-3 row-cols-lg-3 mx-0 contenido-box-sap py-2 pb-3" *ngIf="formaTarifaAplicadaValue !== 'N'">
+
+        <!-- AGR. TRANSACCIONES -->
+
+        <div class="col" *ngIf="formaTarifaAplicadaValue === 'A'">
+            <div *ngIf="(campos.agrtransacciones?.zVisualizar && campos.agrtransacciones?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Agr. Transacciones</label>
+                <select [(ngModel)]="inputAgrTransaccion" class="select-sap">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let moneda of agrTransacciones" value="{{ moneda.value }}">{{ moneda.name }}</option>
+                </select>
+            </div>
+            <div *ngIf="campos.agrtransacciones?.zVisualizar && !campos.agrtransacciones?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Agr. Transacciones</label>
+                <select disabled [(ngModel)]="inputAgrTransaccion" class="select-sap">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let moneda of agrTransacciones" value="{{ moneda.value }}">{{ moneda.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- FIJO -->
+
+        <div class="col" *ngIf="formaTarifaAplicadaValue === 'F'">
+            <div *ngIf="(campos.porcentajefijo?.zVisualizar && campos.porcentajefijo?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Porcentaje Fijo</label>
+                <input [(ngModel)]="inputPorcentajeFijo" type="number" step="0.0000" class="value-input-sap input-sap" value="{{ servicio.FS47TarPor }}">
+            </div>
+            <div *ngIf="campos.porcentajefijo?.zVisualizar && !campos.porcentajefijo?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Porcentaje Fijo</label>
+                <input disabled [(ngModel)]="inputPorcentajeFijo" type="number" step="0.0000" class="value-input-sap input-sap" value="{{ servicio.FS47TarPor }}">
+            </div>
+        </div>
+
+        <div class="col" *ngIf="formaTarifaAplicadaValue === 'F'">
+            <div *ngIf="(campos.monedafija?.zVisualizar && campos.monedafija?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Moneda Fija</label>
+                <select [(ngModel)]="inputMonedaFija" class="select-sap" >
+                    <option value="">Seleccionar Moneda</option>
+                    <option *ngFor="let moneda of monedas" value="{{ moneda.value }}">{{ moneda.name }}</option>
+                </select>
+            </div>           
+            <div *ngIf="campos.monedafija?.zVisualizar && !campos.monedafija?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Moneda Fija</label>
+                <select disabled [(ngModel)]="inputMonedaFija" class="select-sap" >
+                    <option value="">Seleccionar Moneda</option>
+                    <option *ngFor="let moneda of monedas" value="{{ moneda.value }}">{{ moneda.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="formaTarifaAplicadaValue === 'F'">
+            <div *ngIf="(campos.importefijo?.zVisualizar && campos.importefijo?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Importe Fijo</label>
+                <input [(ngModel)]="inputImporteFijo" type="number" step="0.00" class="value-input-sap input-sap" value="{{ servicio.FS47TarImp }}">
+            </div>
+            <div *ngIf="campos.importefijo?.zVisualizar && !campos.importefijo?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Importe Fijo</label>
+                <input disabled [(ngModel)]="inputImporteFijo" type="number" step="0.00" class="value-input-sap input-sap" value="{{ servicio.FS47TarImp }}">
+            </div>
+        </div>
+
+        <!-- TARIFARIO -->
+
+        <div class="col" *ngIf="formaTarifaAplicadaValue === 'T'">
+            <div *ngIf="(campos.tarifario?.zVisualizar && campos.tarifario?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Tarifario</label>
+                <input [(ngModel)]="inputTarifario" type="text" class="value-input-sap input-sap" value="{{ servicio.FS45TarCod }}">
+                <fa-icon [icon]="faSearch" (click)="open(modalTarifario)" class="pointer puntero"></fa-icon>
+            </div>
+            <div *ngIf="campos.tarifario?.zVisualizar && !campos.tarifario?.zModificar" class="d-flex flex-column">
+                <label class="label-sap">Tarifario</label>
+                <input disabled [(ngModel)]="inputTarifario" type="text" class="value-input-sap input-sap" value="{{ servicio.FS45TarCod }}">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-2 pb-3">
+        <div class="col">
+            <div *ngIf="campos.fechainicio?.zVisualizar || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Promoci&oacute;n</label>
+                <input type="text" class="value-input-sap input-sap" value="Promocion" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-2 pb-3">
+        <div class="col">
+            <div *ngIf="(campos.fechainicio?.zVisualizar && campos.fechainicio?.zModificar) || !rol.zControlCampo" class="d-flex flex-column">
+                <label class="label-sap">Fecha de Inicio</label>
+                <input [(ngModel)]="inputFechaInicio" type="date" class="value-input-sap input-sap" value="{{ servicio.FS47IniCob }}">
+            </div>
+            <div *ngIf="campos.fechainicio?.zVisualizar && !campos.fechainicio?.zModificar"  class="d-flex flex-column">
+                <label class="label-sap">Fecha de Inicio</label>
+                <input disabled [(ngModel)]="inputFechaInicio" type="date" class="value-input-sap input-sap" value="{{ servicio.FS47IniCob }}">
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="d-flex py-3">
+            <button type="button" class="btn-sap btn-send mr-2" (click)="actualizarServicio(servicio)">
+                <span *ngIf="!btnLoading">Guardar</span>
+                <span *ngIf="btnLoading">Guardando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+            </button>
+            <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="mx-3" style="font-weight: 400;">{{ mensaje }}</span> <u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+            <!-- <button (click)="goBack()" type="button" class="btn-sap btn-back">Cancelar</button> -->
+        </div>
+    </div>
+</div>
+

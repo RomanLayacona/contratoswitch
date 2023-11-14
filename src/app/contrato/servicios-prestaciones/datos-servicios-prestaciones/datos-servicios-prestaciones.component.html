@@ -1,0 +1,578 @@
+
+<ng-template #eliminar let-modal>
+    <div class="modal-body">
+        <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4 justify-content-center">
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span>Eliminar?</span>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4 justify-content-center">
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <button type="button" (click)="eliminarAdicional()" (click)="modal.dismiss()"  class="btn-sap btn-send">
+                        <span>Si</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <button type="button" class="btn-sap btn-send" aria-label="Close" (click)="modal.dismiss()">
+                        <span>No</span>
+                      </button>                
+                    </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #OC let-modal>
+    <div class="modal-header">
+        <div class="d-flex flex-column">
+            <span class="">Seleccionar Oportunidad Comercial</span>
+        </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sap">
+                <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">ID</th>
+                <th scope="col">NOMBRE</th>
+        
+
+                </tr>
+                </thead>
+                <tbody *ngIf="!loading">
+                <tr  *ngFor="let oportunidad of oportunidades">
+                <td>
+                    <div class="d-flex">
+                        <fa-icon [icon]="faCheckCircle" (click)="asignarID(oportunidad.ID, oportunidad.ObjectID)" (click)="modal.dismiss()" class="puntero pointer"></fa-icon>    
+                    </div>
+                </td>
+                <td>
+                    {{ oportunidad.ID }}
+                </td>
+                <td>
+                    {{ oportunidad.Name }}
+                </td>
+             
+                </tr>
+                </tbody >
+                <tbody align="center"  *ngIf="loading">
+
+                    <td colspan="3">
+                        <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+                    </td>
+
+                </tbody>
+                <tbody align="center"  *ngIf="!loading && oportunidades.length==0">
+
+                    <td colspan="3">
+                        <span >No hay oportunidades creadas.</span>
+                    </td>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #ordIns let-modal>
+    <div class="modal-header">
+        <div class="d-flex flex-column">
+            <span class="">Ingresar Orden de Instalacion</span>
+        </div>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column mr-3">
+                <label class="label-sap">Cnt. Contratada</label>
+                <span class="label-sap">{{ servicio.FS47CntCon }}</span>
+            </div>
+            <div class="d-flex flex-column">
+                <label class="label-sap">Cnt. Avisada</label>
+                <span class="label-sap">{{ servicio.FS47CntAvi }}</span>
+            </div>
+            <div class="d-flex flex-column mx-3">
+                <label class="label-sap">Cnt. ya Activada</label>
+                <span class="label-sap">{{ servicio.FS47CntAct }}</span>
+            </div>
+            <div class="d-flex flex-column">
+                <label class="label-sap">Estado</label>
+                <span class="label-sap">{{ servicio.FS47Sts }}</span>
+            </div>
+        </div>
+        <div class="d-flex flex-row py-2">
+            <div class="d-flex flex-column mr-2">
+                <label class="label-sap">Asesor Comercial</label>
+                <select class="select-sap">
+                    <option>Seleccionar Asesor Comercial</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column">
+                <label class="label-sap" >Cnt. Sin Avisar</label>
+                <span class="label-sap"></span>
+            </div>
+        </div>
+        <div class="d-flex flex-row py-2">
+            <div class="d-flex flex-column">
+                <label class="label-sap">Cnt. a Avisar</label>
+                <input type="text" class="input-sap" [(ngModel)]="cnt">
+            </div>
+        </div>
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column">
+                <label class="label-sap">Observacion</label>
+                <textarea cols="75" rows="5" class="input-sap" [(ngModel)]="observacion"></textarea>
+            </div>
+
+            
+        </div>
+        <div class="d-flex flex-row py-2">
+            <div class="d-flex flex-column">
+                <label class="label-sap">ID OC. CRM</label>
+                <input type="text" class="input-sap" [(ngModel)]="OCId">
+
+            </div>
+            <div class="d-flex flex-column ml-1 justify-content-end">
+                <fa-icon (click)="openLg(OC)" [icon]="faSearch" class="pointer puntero"></fa-icon>
+
+            </div>
+
+           
+        </div>
+        <div class="d-flex flex-row align-items-end justify-content-end">
+            <div class="d-flex flex-column">
+                <button *ngIf="!agregando" type="button" (click)="agregarOrden()" class="btn-sap btn-send">
+                    <span >Crear</span>
+                </button>
+                <button *ngIf="agregando" type="button"class="btn-sap btn-send">
+
+                    <span >Creando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="loadingProd" class="d-flex flex-column align-items-center justify-content-center w-100 h-100 spinner-background">
+    <fa-icon [icon]="faSpinner" class="fa-2x mt-5 d-flex justify-content-center " style="color: #fff;" [spin]="true"></fa-icon>
+</div>
+
+<div class="box-sap" style="background-color: #f9f9f9;">
+
+    <div class="row w-100 pr-0" style="background-color: #f9f9f9;">
+        <div class="col-8 mx-0">
+            <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Tipo Contrato</span>
+                        <h6 class="value-input-sap">{{ servicio.FS01ConDsc }}</h6>
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Nro. Contrato</span>
+                        <h6 class="value-input-sap">{{ servicio.FS46CONNRO }}</h6>
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Servicio</span>
+                        <h6 class="value-input-sap">{{ servicio.FS44SrvIde }} - {{ servicio.FS44SrvNom }}</h6>
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Prestaci&oacute;n</span>
+                        <h6 class="value-input-sap">{{ servicio.FS44CodPre }} - {{ servicio.FS44DesPre }}</h6>
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Cliente a Facturar</span>
+                        <h6 class="value-input-sap">{{ servicio.FS47CliCod }} - {{ servicio.FS46CliNom }}</h6>
+                    </div>
+                </div>
+        
+                <div class="col">
+                    <div class="d-flex flex-column">
+                        <span class="label-sap">Sucursal a Facturar</span>
+                        <h6 class="value-input-sap">{{ servicio.FS46CLISUC }} - {{ servicio.FS46CliSNo }}</h6>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="col-4 mx-0">
+            <div class="row row-cols-3 row-cols-lg-3 h-100 mx-0 contenido-box-sap py-4">
+                <div class="col">
+                    <div class="d-flex">                      
+                        <input class="mt-0" type="checkbox" [checked]="casaMatriz" disabled>
+                        <span class="label-sap">Casa Matriz</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex">
+                        <input class="mt-0" type="checkbox" [checked]="cuotas" disabled>
+                        <span class="label-sap">Cuotas</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex">
+                        <input class="mt-0" type="checkbox" [checked]="activaciones" disabled>
+                        <span class="label-sap">Activaciones</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex">
+                        <input class="mt-0" type="checkbox" [checked]="transaccional" disabled>
+                        <span class="label-sap">Transaccional</span>                        
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex">
+                        <input class="mt-0" type="checkbox" [checked]="descuentos" disabled>
+                        <span class="label-sap">Descuentos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <li  [ngbNavItem]="1" *ngIf="servicio.FS44PreDif === 1 && rolAdicionales.zVisualizar">
+        <a ngbNavLink>Adicionales</a>
+        <ng-template ngbNavContent>
+          <div class="box-sap">
+              <div class="col-12 py-3">
+                  <div class="d-flex">
+                      <button *ngIf="rolAdicionales.zCrear" type="button" class="btn-sap btn-send" (click)="nuevoAdic()">
+                          <span>+ Nuevo</span>
+                      </button>
+                  </div>
+              </div>
+  
+              <div class="table-responsive">
+                  <table class="table table-bordered table-sap table-sap-small">
+                      <thead>
+                      <tr>
+                          <th scope="col"></th>
+                          <th scope="col">L&iacute;nea</th>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Cnt.</th>
+                          <th scope="col">Tipo</th>
+                          <th scope="col">Mon.</th>
+                          <th scope="col">Importe</th>
+                          <th scope="col">Mon.</th>
+                          <th scope="col">Descuento</th>
+                          <th scope="col">Fecha Desde</th>
+                          <th scope="col">Hasta</th>
+                          <th scope="col">Cob. Inst.</th>
+                          <th scope="col">Orden Inst.</th>
+                          <th scope="col">Mon.</th>
+                          <th scope="col">Imp. Cuo.</th>
+                          <th scope="col">Cnt. Cuo.</th>
+                          <th scope="col">Cuo. Fact.</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let adicional of adicionales">
+                          <td>
+                              <div class="d-flex">
+                                    <fa-icon *ngIf="adicional.FS73OrdIns?.trim() == '0'" (click)="openOrden(ordIns, adicional)" class="puntero icono-accion mr-2" [icon]="faClipboard"></fa-icon>
+                                      <fa-icon *ngIf="rolAdicionales.zModificar" (click)="editarAdicional(adicional)" class="puntero icono-accion" [icon]="faEdit"></fa-icon>
+                               
+                                      <fa-icon *ngIf="rolAdicionales.zEliminar" (click)="openEliminar(eliminar, adicional)" class="puntero icono-accion" [icon]="faTrashAlt" style="margin-left: 5px;"></fa-icon>
+                                     
+                              </div>
+                          </td>
+                          <td>
+                              {{ adicional.FS73NroLin }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73AdiFch }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73AdiCnt }}
+                          </td>
+                          <td>
+                             <span *ngIf="adicional.FS73Tpo === 'V'"> Valor Contrato </span>
+                             <span *ngIf="adicional.FS73Tpo === 'P'">Promocion</span>
+                             <span *ngIf="adicional.FS73Tpo === 'G'"> Gratuito </span>
+                             <span *ngIf="adicional.FS73Tpo === 'C'">Venta</span>
+                          </td>
+                          <td>
+                              <span *ngIf="adicional.FS73MonCnu === '840'">US. DOLLAR</span>
+                              <span *ngIf="adicional.FS73MonCnu === '600'">GUARANI</span>
+                          </td>
+                          <td>
+                             {{ adicional.FS73Imp }}
+                          </td>
+                          <td>
+                              <span *ngIf="adicional.FS73DMOCNU === '840'">US. DOLLAR</span>
+                              <span *ngIf="adicional.FS73DMOCNU === '600'">GUARANI</span>
+                          </td>
+                          <td>
+                              {{ adicional.FS73DtoImp }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73FchIni }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73FchFin }}
+                          </td>
+                          <td>
+                              <input *ngIf="adicional.FS73ConIns === '1' " type="checkbox" name="cobIns"  disabled="disabled" checked="checked" >
+                              <input *ngIf="adicional.FS73ConIns === '0' " type="checkbox" disabled="disabled" >
+                          </td>
+                          <td>
+                              {{ adicional.FS73OrdIns }}
+                          </td>
+                          <td>
+                              <span *ngIf="adicional.FS73MonCuo === '840'">US. DOLLAR</span>
+                              <span *ngIf="adicional.FS73MonCuo === '600'">GUARANI</span>
+                          </td>
+                          <td>
+                              {{ adicional.FS73ImpCuo }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73CntCuo }}
+                          </td>
+                          <td>
+                              {{ adicional.FS73FacCuo }}
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          </ng-template>
+    </li>
+    <li [ngbNavItem]="2" *ngIf="servicio.FS44PreDes === 1 && servicio.FS47FATId !== 'N' && rol.zVisualizar">
+      <a ngbNavLink>Descuentos No Transaccionales</a>
+      <ng-template ngbNavContent>
+        <div class="box-sap">
+            <div class="col-12 py-3">
+                <div class="d-flex">
+                    <button *ngIf="rol.zCrear" type="button" class="btn-sap btn-send" (click)="nuevoDescNt()">
+                        <span>+ Nuevo</span>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-bordered table-sap table-sap-small">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                        </th>
+                        <th scope="col">F. Vigencia Desde</th>
+                        <th scope="col">Hasta</th>
+                        <th scope="col">Porcentaje</th>
+                        <th scope="col">Mon.</th>
+                        <th scope="col">Importe</th>
+                        <th scope="col">ID Promoci&oacute;n</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let descuento of descuentosNoTr">
+                        <td>                            
+                            <div class="d-flex align-items-center" ngbDropdown>
+                                <fa-icon *ngIf="rol.zModificar" (click)="editarDescuento(descuento)" class="puntero icono-accion" [icon]="faEdit"></fa-icon>
+                                
+                                <button *ngIf="rol.zEliminar" class="btn btn-secondary dropdown-toggle" type="button" ngbDropdownToggle id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <fa-icon class="puntero icono-accion" [icon]="faTrashAlt"></fa-icon>
+                                </button>
+
+                                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                                    <li><a (click)="eliminarDescuento(descuento)" class="dropdown-item puntero">Eliminar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            {{ descuento.FS50FchVig }}
+                        </td>
+                        <td>
+                            {{ descuento.FS50FchHta }}
+                        </td>
+                        <td>
+                            {{ descuento.FS50DtoPor }}
+                        </td>
+                        <td>
+                            <span *ngIf="descuento.FS50MonCnu === '840'">US. DOLLAR</span>
+                            <span *ngIf="descuento.FS50MonCnu === '600'">GUARANI</span>
+                        </td>
+                        <td>
+                           {{ descuento.FS50DtoImp }}
+                        </td>
+                        <td>
+                           {{ descuento.FS50PrmId }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div> 
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3" *ngIf="servicio.FS44PreAct === 1 && rolActivaciones.zVisualizar">
+      <a ngbNavLink>Activaciones</a>
+      <ng-template ngbNavContent>
+        <div class="box-sap">
+
+            <div>
+                <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Desde</label>
+                            <input type="date" [(ngModel)]="inputFiltroActFechaDsd" class="value-input-sap input-sap">        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Hasta</label>
+                            <input type="date" [(ngModel)]="inputFiltroActFechaHta" class="value-input-sap input-sap">        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Tipo</label>
+                            <select [(ngModel)]="inputFiltroActTpo" class="select-sap w-100">
+                                <option value="">Seleccionar Tipo</option>
+                                <option value="A">Activaci&oacute;n</option>
+                                <option value="D">Desactivaci&oacute;n</option>
+                            </select>        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <label class="label-sap">Orden Inst.</label>
+                            <input [(ngModel)]="inputFiltroActInsCod" class="value-input-sap input-sap">       
+                        </div>
+                    </div>
+        
+                </div>
+
+                <div>
+                    <div class="col-12 contenido-box-sap pb-4">
+                        <button (click)="getActivaciones()" type="button" class="btn-sap btn-send mr-2">
+                            <span>Filtrar</span>
+                        </button>
+
+                        <button (click)="limpiarFiltrosActivaciones()" type="button" class="btn-sap btn-back">
+                            <span>Limpiar Filtros</span>
+                        </button>
+                    </div>
+                </div>
+        </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-sap table-sap-small">
+                    <thead>
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Cod.</th>
+                        <th scope="col">Art&iacute;culo</th>
+                        <th scope="col">Serie</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Orden Inst.</th>
+                        <th scope="col">Orden Retiro</th>
+                        <th scope="col">Mon.</th>
+                        <th scope="col">Importe</th>
+                        <th scope="col">Descuento</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="loadingActivaciones">
+                        <div class="d-flex text-center p-4 w-100 align-items-center justify-content-center">
+                            <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+                        </div>
+                    </tbody>
+                    <tbody *ngIf="!loadingActivaciones">
+                    <tr *ngFor="let activacion of resActivaciones">
+                        <td>
+                            {{ activacion.FS48FH }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48ARTCOD }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48ArtDes }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48INVSER }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48TPO }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48ORI }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48INSCOD }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48RETCOD }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48MONCNU }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48IMP }}
+                        </td>
+                        <td>
+                            {{ activacion.FS48DTOIMP }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+      </ng-template>
+    </li>
+</ul>  
+  
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<div class="col">
+    <div class="d-flex py-3">
+        <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="mx-3" style="font-weight: 400;">{{ mensaje }}</span> <u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+        <!-- <button (click)="goBack()" type="button" class="btn-sap btn-back">Cancelar</button> -->
+    </div>
+</div>
+
+<!-- <div>
+    <div class="col">
+        <h5 class="titulo-seccion-sap m-0"><u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+    </div>
+</div>   -->
+

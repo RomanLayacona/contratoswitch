@@ -1,0 +1,86 @@
+<div class="box-sap">
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap py-4">
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Cliente</span>
+                <h6 class="value-input-sap">{{ contrato.CodigoCliente }} - {{ contrato.razonSocial }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Sucursal</span>
+                <h6 class="value-input-sap">{{ contrato.CodigoSucursal }} - {{ contrato.denComercial }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Rubro</span>
+                <h6 class="value-input-sap">{{ contrato.rubroId }} - {{ contrato.descRubro }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">MCC</span>
+                <h6 class="value-input-sap">{{ contrato.mcc }} - {{ contrato.descMcc }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;d. Procesadora</span>
+                <h6 class="value-input-sap">{{ contrato.codProc }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">C&oacute;d. Switch</span>
+                <h6 class="value-input-sap">{{ contrato.codSwi }}</h6>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <span class="label-sap">Contrato</span>
+                <h6 class="value-input-sap">{{ contrato.NroContrato }} - {{ contrato.descTc }}</h6>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="box-sap">
+
+    <div class="border-bottom">
+        <div class="col-12">
+            <h5 class="titulo-seccion-sap m-0">Ingresar Servicio</h5>
+        </div>
+    </div>
+
+    <div class="row row-cols-4 row-cols-lg-4 mx-0 contenido-box-sap pt-4">
+
+        <div class="col">
+            <div class="d-flex flex-column">
+                <label class="label-sap">Servicio</label>
+                <select [(ngModel)]="inputServicio" class="select-sap">
+                    <option *ngFor="let servicio of servicios" value="{{ servicio.FS44SRVIDE }}">{{ servicio.FS44SRVIDE }} - {{ servicio.FS44SRVNOM }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="d-flex py-3">
+            <button type="button" class="btn-sap btn-send mr-2" (click)="ingresarServicio()">
+                <span *ngIf="!btnLoading">Ingresar</span>
+                <span *ngIf="btnLoading">Ingresando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+            </button>
+            <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="mx-3" style="font-weight: 400;">{{ mensaje }}</span> <u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+        </div>    
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div>
+    <div class="box-sap">
+
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0">Crear Contrato</h5>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-lg-1 mx-0 contenido-box-sap py-4">
+
+            <div class="col">
+                <div class="d-flex flex-column">
+                    <span class="label-sap">Tipo Contrato</span>
+                    <select [(ngModel)]="tipoContratoInput">
+                        <option value="">Seleccionar Tipo Contrato</option>
+                        <option *ngFor="let tipoContrato of tipoContratos" value="{{ tipoContrato.FS01CONTPO }}">{{ tipoContrato.FS01CONDSC }}</option>
+                    </select>
+                </div>
+            </div>
+
+            
+
+            <div class="col">
+                <div class="d-flex mt-3">
+                    <button type="button" class="btn-sap btn-send mr-2" (click)="crearContrato()">
+                        <span *ngIf="!btnLoading">Crear</span>
+                        <span *ngIf="btnLoading">Creando <fa-icon class="ml-2" [icon]="faSpinner" [spin]="true"></fa-icon></span>
+                    </button>
+                    <!-- <button (click)="goBack()" type="button" class="btn-sap btn-back">Cancelar</button> -->
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <div class="box-sap">
+        <div class="border-bottom">
+            <div class="col-12">
+                <h5 class="titulo-seccion-sap m-0"><span *ngIf="showMensaje" class="mr-3" style="font-weight: 400;">{{ mensaje }}</span> <u (click)="goBack()" class="puntero">Volver atr&aacute;s</u></h5>
+            </div>
+        </div> 
+    </div>
+</div>

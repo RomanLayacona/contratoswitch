@@ -1,0 +1,97 @@
+<div *ngIf="loading">
+    <div class="col-12 text-center p-3">
+        <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+    </div>
+</div>
+
+<div *ngIf="!loading && authorized">
+    <div *ngIf="showTablaContratos && existeUsuario">
+        <div>
+            <div class="box-sap" >
+        
+                <div>
+                    <div class="col-12 py-3">
+                        <div class="d-flex">
+                            <button *ngIf="rol.zCrear" (click)="crearContrato()" type="button" class="btn-sap btn-send">
+                                <span>+ Nuevo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="box-sap">
+                <table class="table table-bordered table-sap">
+                    <thead>
+                    <tr>
+                    <th scope="col"></th>
+                    <th scope="col">TC</th>
+                    <th scope="col">Nro.</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Usuario Ingreso</th>
+                    <th scope="col">FH Ingreso</th>
+                    <th scope="col">Div.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let contrato of contratos">
+                    <td >
+                        <div class="d-flex">
+                            <fa-icon *ngIf="rol.zModificar " (click)="modificarEstado(contrato)" class="puntero icono-accion" [class]="{toogleactivo: contrato.Estado === 'A', toogledesactivo: contrato.Estado !== 'A'}" [icon]="contrato.Estado === 'A' ? faToogleOn : faToogleOff"></fa-icon>
+                            <fa-icon *ngIf="rol.zVisualizar" (click)="serviciosPrestaciones(contrato)" class="puntero icono-accion mx-3" [icon]="faSearch"></fa-icon>
+                        </div>
+                    </td>
+                    <td>
+                        {{ contrato.TipoContrato }}
+                    </td>
+                    <td>
+                        {{ contrato.NroContrato }}
+                    </td>
+                    <td>
+                        {{ contrato.Estado }}
+                    </td>
+                    <td>
+                        {{ contrato.usuarioIngreso }}
+                    </td>
+                    <td>
+                        {{ contrato.fhIngreso }}
+                    </td>
+                    <td>
+                        {{ contrato.division }}
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
+                
+                <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshContratos()">
+                    </ngb-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!showTablaContratos">
+        <div class="box-sap">
+        
+            <div>
+                <div class="col-12 py-3">
+                    <div class="d-flex">
+                        <button (click)="crearContrato()" type="button" class="btn-sap btn-send">
+                            <span>+ Nuevo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="p-3">
+            <div class="col-12 text-center">
+                <h6 class="titulo-sap">Este usuario no cuenta con Contratos Switch</h6>
+            </div>
+        </div>
+    </div>
+</div>
+

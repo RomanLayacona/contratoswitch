@@ -1,0 +1,61 @@
+<div class="box-sap">
+    <div>
+        <div class="col-12 py-3">
+            <div class="d-flex">
+                <button type="button" class="btn-sap btn-send" (click)="agregarParametroComision()">
+                    <span>Agregar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-sap">
+        <thead>
+        <tr>
+            <th scope="col"></th>  
+            <th scope="col">Estado</th>
+            <th scope="col">Est. Aut.</th>
+            <th scope="col">Mon.</th>
+            <th scope="col">Origen Tipo Rel.</th>
+            <th scope="col">Descripci&oacute;n</th>
+            <th scope="col">Tipo Com.</th>
+            <th scope="col">Porc. Com.</th>
+            <th scope="col">Imp. Com. Min.</th>
+            <th scope="col">Imp. Com. Max.</th>
+            <th scope="col">Imp. Fijo Com.</th>
+            <th scope="col">Imp. Trans. P/Apl. Fijo</th>
+            <th scope="col">D&iacute;as F. Liq.</th>
+            <th scope="col">Cta</th>
+            <th scope="col">Tpo</th>
+            <th scope="col">Usu. Ult. Act.</th>
+            <th scope="col">Origen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let parametro of parametrosComision">
+            <td>
+
+            </td>
+            
+            <td>
+                {{ parametro.GR17MonCnu }}
+            </td>
+            <td>
+                {{ parametro.GR17BanNom }}
+            </td>
+            <td>
+                {{ parametro.GR17SenCod }}
+            </td>
+            <td>
+                {{ parametro.GR17CtaBan }}
+            </td>
+            <td>
+                {{ parametro.GR17CtaBan }}
+            </td>
+            <td>
+                {{ parametro.GR17LiqChq }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
