@@ -2,7 +2,7 @@
 FROM httpd:2.4-alpine
 COPY . .
 RUN apk add --update nodejs npm
-RUN npm ci
+#RUN npm ci
 RUN npm install -g @angular/cli@14.2.10
 RUN npm run build --configuration=staging
 RUN cp -r ./dist/domus/* /usr/local/apache2/htdocs/
