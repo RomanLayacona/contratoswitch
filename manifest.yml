@@ -27,7 +27,7 @@ metadata:
 data:
   config.json: |-
     {
-      "API_URL": "https://contratoswitch.c-3929e53.kyma.ondemand.com"
+      "API_URL": "https://contratoswitch.a8a14dc.kyma.ondemand.com"
     }
 ---
 apiVersion: apps/v1
